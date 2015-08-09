@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+
+  "name": "Hacker Headlines",
+  "description": "This extension displays the highest-rated hacker news",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "hh_icon.png",
+    "default_popup": "news_popup.html"
+  },
+  "permissions": [
+    "notifications"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  }
+}
