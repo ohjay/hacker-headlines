@@ -18,11 +18,17 @@ const NOTIF_ICON_PATH = 'images/hacker_news.png';
 var id = 0; // the id for each notification
 var oldNews = Object.create(null); // set of headlines that have already been displayed
 var day = Date.prototype.getDay();
+var nextBigNews = []; // the newest headlines: element [0] = title, element [1] = link
 
 // Gets the biggest news that hasn't been seen before.
 function getBiggestNews() {
     var rText = this.responseText;
     console.log(rText);
+    
+    if (/* A not in oldNews */ true) {
+        nextBigNews[0] = "Ask HN: I will help your startup in exchange of food and a place to stay";
+        nextBigNews[1] = "https://news.ycombinator.com/item?id=10032299";
+    }
 }
 
 /* Checks Hacker News for new topics that have over PT_BENCHMARK points.
@@ -39,7 +45,7 @@ function checkForUpdates(onClick) {
     // If a hot topic was found, throw out a notification!
     if (/* its score is >= PT_BENCHMARK */) {
         // oldNews[/* LABEL */] = true; // this news is now old news
-        createNotification('[Hacker News title]', '[link]');
+        createNotification(nextBigNews[0], nextBigNews[1]);
         makeSound();
     } else if (onClick) {
         /* If we can't find anything new that's over PT_BENCHMARK points
@@ -94,7 +100,7 @@ chrome.alarms.onAlarm.addListener(function() {
     }
     
     checkForUpdates(false);
-})
+});
 
 // When the icon is clicked, check for updates and reset the alarm timer
 chrome.browserAction.onClicked.addListener(function() {
