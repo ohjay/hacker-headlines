@@ -6,11 +6,11 @@
   "version": "1.0",
 
   "browser_action": {
-    "default_icon": "hh_icon.png",
-    "default_popup": "news_popup.html"
+    "default_icon": "images/hh_icon.png"
   },
   "permissions": [
-    "notifications"
+    "notifications",
+    "alarms"
   ],
   "background": {
     "scripts": [
