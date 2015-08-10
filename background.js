@@ -25,7 +25,8 @@ function getBiggestNews() {
     var rText = this.responseText;
     console.log(rText);
     
-    if (/* A not in oldNews */ true) {
+    if (/* LABEL not in oldNews */) {
+        oldNews[/* LABEL */] = true; // this news is now old news
         nextBigNews[0] = "Ask HN: I will help your startup in exchange of food and a place to stay";
         nextBigNews[1] = "https://news.ycombinator.com/item?id=10032299";
     }
@@ -42,16 +43,12 @@ function checkForUpdates(onClick) {
     xhr.setRequestHeader('Access-Control-Allow-Origin', "*");
     xhr.send();
     
-    // If a hot topic was found, throw out a notification!
-    if (/* its score is >= PT_BENCHMARK */) {
-        // oldNews[/* LABEL */] = true; // this news is now old news
+    /* If a hot topic was found, throw out a notification! However, 
+     * if there is nothing over PT_BENCHMARK points AND the user 
+     * clicked on the icon, then we'll settle for whatever we get. */
+    if (/* score is >= PT_BENCHMARK */ || onClick) {
         createNotification(nextBigNews[0], nextBigNews[1]);
         makeSound();
-    } else if (onClick) {
-        /* If we can't find anything new that's over PT_BENCHMARK points
-         * AND the user clicked on the icon, then we'll settle for the 
-         * highest-rated news on the front page that isn't old news. */
-        getBiggestNews();
     }
 }
 
