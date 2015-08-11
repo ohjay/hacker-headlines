@@ -5,7 +5,7 @@ Hacker Headlines is a Chrome extension that periodically checks [Hacker News](ht
 
 That means you don't need to spend every other minute checking the site for distractions.<sup>1</sup> And in the meantime, you can learn new things without even trying. Isn't that great?
 
-**Update [8/10/15]: This extension is now available for download in the Chrome Web Store!**<br>[Here](https://chrome.google.com/webstore/detail/hacker-headlines/delnkcnicmhpooaokjbbpddaeikmhkin) is a link to the listing. 
+**Update [8/10/15]: This extension is now available for download in the Chrome Web Store! [Here](https://chrome.google.com/webstore/detail/hacker-headlines/delnkcnicmhpooaokjbbpddaeikmhkin) is a link to the listing.**
 
 ### For the visually inclined
 Here's a screenshot of Hacker Headlines in action: ![alt text](https://github.com/ohjay/hacker-headlines/blob/master/images/popup_screenshot.png "The popup in action")
