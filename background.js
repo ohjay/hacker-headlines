@@ -107,7 +107,7 @@ function createNotification(title, link) {
 }
 
 // We'll check for updates and start the first alarm
-chrome.runtime.onStartup.addListener(function() {
+chrome.runtime.onInstalled.addListener(function() {
     checkForUpdates(false);
     startAlarm();
 });

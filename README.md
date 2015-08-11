@@ -6,7 +6,23 @@ Hacker Headlines is a Chrome extension that periodically checks [Hacker News](ht
 That means you don't need to spend every other minute checking the site for distractions.<sup>1</sup> And in the meantime, you can learn new things without even trying. Isn't that great?
 
 ### For the visually inclined
-Here's a screenshot of Hacker Headlines in action:<br><_image coming soon_>
+Here's a screenshot of Hacker Headlines in action: ![alt text](https://github.com/ohjay/hacker-headlines/blob/master/images/popup_screenshot_.png "The popup in action")
+
+And here's a screenshot of the Extensions page, just in case anyone cares<sup>2</sup>: ![alt text](https://github.com/ohjay/pesto_check/blob/master/extensionspage_screenshot.png "The almighty chrome://extensions page")
+
+### Installation instructions
+_If you too_ want to know exactly when the hamburger menu doesn't work<sup>3</sup>, then you can download this extension today! All you have to do is ~~pay me $20~~ download all the files and load the extension into Chrome. Steps to do so are as follows:
+
+1. **Download all the files**
+    Either click "Download ZIP" in the sidebar or execute `git clone https://github.com/ohjay/hacker-headlines.git` from the command line.
+2. **Load the extension into Chrome**
+    - Go to Chrome and enter the `chrome://extensions` page (just type it into the address bar).
+    - In the upper-right hand corner, mark the "Developer mode" checkbox.
+    - Click "Load unpacked extension..." and choose the `hacker-headlines` folder that you just downloaded.
+    - The extension icon should appear in the top right corner of your browser. 
+To use Hacker Headlines, either click on the icon to get news immediately, or wait for it to notify you automatically every 20 minutes. Enjoy!
 
 ***
 <sup>1</sup> Instead, the distractions will come to you (...but in a controlled setting!)
+<sup>2</sup> I can't think why anyone would, but who knows?
+<sup>3</sup> See the first screenshot in [For the visually inclined](#for-the-visually-inclined)
