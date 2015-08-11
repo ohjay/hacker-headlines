@@ -1,9 +1,11 @@
-# hacker-headlines
+# hacker-headlines [v1.1.0]
 ...but maybe not the news you need.
 
 Hacker Headlines is a Chrome extension that periodically checks [Hacker News](https://news.ycombinator.com/) for the latest and greatest updates on the world of computer science. If it finds something that readers have deemed acceptably newsworthy, a notification containing the headline and link will be displayed in the corner of your browser window. 
 
 That means you don't need to spend every other minute checking the site for distractions.<sup>1</sup> And in the meantime, you can learn new things without even trying. Isn't that great?
+
+**Update [8/10/15]: This extension is now available for download in the Chrome Web Store!**<br>[Here](https://chrome.google.com/webstore/detail/hacker-headlines/delnkcnicmhpooaokjbbpddaeikmhkin) is a link to the listing. 
 
 ### For the visually inclined
 Here's a screenshot of Hacker Headlines in action: ![alt text](https://github.com/ohjay/hacker-headlines/blob/master/images/popup_screenshot.png "The popup in action")
@@ -12,6 +14,8 @@ And here's a screenshot of the Extensions page, just in case anyone cares<sup>2<
 
 ### Installation instructions
 _IF YOU TOO_ want to know exactly when the hamburger menu doesn't work, then you can download this extension today! All you have to do is ~~pay me $20~~ download all the files and load the extension into Chrome. Steps to do so are as follows:
+
+**Note: as of 8/10/15 you can also [download the extension in the Web Store](https://chrome.google.com/webstore/detail/hacker-headlines/delnkcnicmhpooaokjbbpddaeikmhkin).**
 
 1. **Download all the files**
     - Click "Download ZIP" in the sidebar, or execute `git clone https://github.com/ohjay/hacker-headlines.git` from the command line.
