@@ -33,11 +33,14 @@ function getBiggestNews(news) {
     
     var topLink, topTitle, topScore = -1; // vars for keeping track of the biggest news
     for (var i = 0; i < dtLength; i++) {
-        var dataRe = /<a href="(.*)">(.*)<\/a>.*\n.*(\d+) points/g;
+        var dataRe = /<a href="(.*)">(.*)<\/a>.*\n.*>(\d+)\spoints/g;
         var filteredData = dataRe.exec(data[i]).slice(1, 4);
         var link = filteredData[0], title = filteredData[1], score = filteredData[2];
         
-        if (links.indexOf(link) == -1 && parseInt(score) > topScore) {
+        if (window.links.indexOf(link) == -1 && parseInt(score) > topScore) {
+            console.log("Link: " + link);
+            console.log("Links: " + links);
+            console.log(score);
             // i.e. we haven't seen the link before, and of this pool the score is the biggest
             // update our "best of show" attributes!
             topLink = link;
@@ -46,7 +49,7 @@ function getBiggestNews(news) {
         }
     }
 
-    links[notifId] = link; // the news we return is now old news
+    window.links[notifId] = topLink; // the news we return is now old news
     return [topTitle, topLink, topScore];
 }
 
@@ -95,11 +98,6 @@ function createNotification(title, link) {
         iconUrl: NOTIF_ICON_PATH
     }, function() {});
     
-    // Have the notification take you to the article on click
-    chrome.notifications.onClicked.addListener(function(notificationId) {
-        window.open(links[parseInt(notificationId)]);
-    });
-    
     // Close the notification after 20 seconds
     timer = setTimeout(function() {
         chrome.notifications.clear(notifId.toString(), function() {});
@@ -132,4 +130,9 @@ chrome.browserAction.onClicked.addListener(function() {
     // Reset el alarm (because we just checked!)
     chrome.alarms.clear(STD_ALARM_NAME);
     startAlarm();
+});
+
+// Have the notification take you to the article on click
+chrome.notifications.onClicked.addListener(function(notificationId) {
+    window.open(links[parseInt(notificationId)]);
 });
