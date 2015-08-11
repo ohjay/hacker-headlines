@@ -15,39 +15,60 @@ const NOTIF_DELAY = 15000; // ms until we close the notification automatically
 const NOTIF_ICON_PATH = 'images/hacker_news.png';
 
 var notifId = 0; // the id for each notification
-var oldNews = Object.create(null); // set of headlines that have already been displayed
 var day = Date.prototype.getDay();
-var nextBigNews = []; // the newest headlines: element [0] = title, element [1] = link
-var links = []; // links, indexed by notification id
+var links = []; /* links, indexed by notification id. Dually serves as an set of identifiers
+                 * for headlines that have already been displayed */
+
+/* Gets the biggest news that hasn't been seen before, by parsing the page data
+ * given as NEWS. "Biggest news" refers to the highest-scoring news on the front page 
+ * (i.e. the one with the most upvotes). 
+ * 
+ * Returns an array of size 3 containing the title as the first element [0],
+ * the link as second element [1], and the score as the third element [2]. 
+ */
+function getBiggestNews(news) {
+    // Parse: link/title/score chunks
+    var data = news.match(/<a href=".*">.*sitebit comhead".*\n.*id="score_\d+">\d+ points/g);
+    var dtLength = data.length;
+    
+    var topLink, topTitle, topScore = -1; // vars for keeping track of the biggest news
+    for (var i = 0; i < dtLength; i++) {
+        var dataRe = /<a href="(.*)">(.*)<\/a>.*\n.*(\d+) points/g;
+        var filteredData = dataRe.exec(data[i]).slice(1, 4);
+        var link = filteredData[0], title = filteredData[1], score = filteredData[2];
+        
+        if (links.indexOf(link) == -1 && parseInt(score) > topScore) {
+            // i.e. we haven't seen the link before, and of this pool the score is the biggest
+            // update our "best of show" attributes!
+            topLink = link;
+            topTitle = title;
+            topScore = score;
+        }
+    }
+
+    links[notifId] = link; // the news we return is now old news
+    return [topTitle, topLink, topScore];
+}
 
 /* Checks Hacker News for new topics that have over PT_BENCHMARK points.
  * ON_CLICK is a boolean value that specifies whether or not this check
  * originated from a click. */
-function checkForUpdates(onClick) {
-    // Gets the biggest news that hasn't been seen before.
-    function getBiggestNews(e) {
-        console.log(this.responseText);
-        if (/* LABEL not in oldNews */) {
-            oldNews[/* LABEL */] = true; // this news is now old news
-            nextBigNews[0] = 'Ask HN: I will help your startup in exchange of food and a place to stay';
-            nextBigNews[1] = 'Click to read article!';
-            links[notifId] = 'https://news.ycombinator.com/item?id=10032299';
-        }
-    
-        /* If a hot topic was found, throw out a notification! However, 
-         * if there is nothing over PT_BENCHMARK points AND the user 
-         * clicked on the icon, then we'll settle for whatever we get. */
-        if (/* score is >= PT_BENCHMARK */ || onClick) {
-            createNotification(nextBigNews[0], nextBigNews[1]);
-            makeSound();
-        }
-    }
-    
+function checkForUpdates(onClick) {   
     // Send an HTTP GET request to Hacker News
     var xhr = new XMLHttpRequest();
     xhr.open('GET', NEWS_URL, true);
     xhr.responseType = 'text';
-    xhr.onload = getBiggestNews;
+    xhr.onload = function(e) {
+        bigNews = getBiggestNews(this.responseText);
+
+        /* If a hot topic was found, throw out a notification! However, 
+         * if the user clicked on the icon and there is nothing over 
+         * PT_BENCHMARK points, then we'll settle for the highest-rated news. */
+        if (onClick || bigNews[2] >= PT_BENCHMARK) {
+            createNotification(bigNews[0], "Click to view article!");
+            makeSound();
+        }
+    };
     
     xhr.send(); // go request go!
 }
