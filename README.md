@@ -15,7 +15,7 @@ And here's a screenshot of the Extensions page, just in case anyone cares<sup>2<
 ### Installation instructions
 _IF YOU TOO_ want to know exactly when the hamburger menu doesn't work, then you can download this extension today! All you have to do is ~~pay me $20~~ download all the files and load the extension into Chrome. Steps to do so are as follows:
 
-**Note: as of 8/10/15 you can also [download the extension in the Web Store](https://chrome.google.com/webstore/detail/hacker-headlines/delnkcnicmhpooaokjbbpddaeikmhkin).**
+**Note: as of 8/10/15 you can also [download the extension through the Web Store](https://chrome.google.com/webstore/detail/hacker-headlines/delnkcnicmhpooaokjbbpddaeikmhkin).**
 
 1. **Download all the files**
     - Click "Download ZIP" in the sidebar, or execute `git clone https://github.com/ohjay/hacker-headlines.git` from the command line.

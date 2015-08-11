@@ -38,9 +38,6 @@ function getBiggestNews(news) {
         var link = filteredData[0], title = filteredData[1], score = filteredData[2];
         
         if (window.links.indexOf(link) == -1 && parseInt(score) > topScore) {
-            console.log("Link: " + link);
-            console.log("Links: " + links);
-            console.log(score);
             // i.e. we haven't seen the link before, and of this pool the score is the biggest
             // update our "best of show" attributes!
             topLink = link;
