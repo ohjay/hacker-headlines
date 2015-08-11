@@ -11,45 +11,45 @@ const PT_BENCHMARK = 70;
 const NOTIF_SOUND_PATH = 'sounds/waterSplashing.mp3';
 const STD_ALARM_NAME = 'c.alarm'; // "check" alarm
 const STD_PERIOD = 20; // this (in minutes) is how often the check should happen
-const STD_NOTIF_NAME = 'u.notification'; // "update" notification
 const NOTIF_DELAY = 15000; // ms until we close the notification automatically
 const NOTIF_ICON_PATH = 'images/hacker_news.png';
 
-var id = 0; // the id for each notification
+var notifId = 0; // the id for each notification
 var oldNews = Object.create(null); // set of headlines that have already been displayed
 var day = Date.prototype.getDay();
 var nextBigNews = []; // the newest headlines: element [0] = title, element [1] = link
-
-// Gets the biggest news that hasn't been seen before.
-function getBiggestNews() {
-    var rText = this.responseText;
-    console.log(rText);
-    
-    if (/* LABEL not in oldNews */) {
-        oldNews[/* LABEL */] = true; // this news is now old news
-        nextBigNews[0] = "Ask HN: I will help your startup in exchange of food and a place to stay";
-        nextBigNews[1] = "https://news.ycombinator.com/item?id=10032299";
-    }
-}
+var links = []; // links, indexed by notification id
 
 /* Checks Hacker News for new topics that have over PT_BENCHMARK points.
  * ON_CLICK is a boolean value that specifies whether or not this check
  * originated from a click. */
 function checkForUpdates(onClick) {
-    // Send an HTTP request to Hacker News
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', getBiggestNews);
-    xhr.open('GET', NEWS_URL, true);
-    xhr.setRequestHeader('Access-Control-Allow-Origin', "*");
-    xhr.send();
+    // Gets the biggest news that hasn't been seen before.
+    function getBiggestNews(e) {
+        console.log(this.responseText);
+        if (/* LABEL not in oldNews */) {
+            oldNews[/* LABEL */] = true; // this news is now old news
+            nextBigNews[0] = 'Ask HN: I will help your startup in exchange of food and a place to stay';
+            nextBigNews[1] = 'Click to read article!';
+            links[notifId] = 'https://news.ycombinator.com/item?id=10032299';
+        }
     
-    /* If a hot topic was found, throw out a notification! However, 
-     * if there is nothing over PT_BENCHMARK points AND the user 
-     * clicked on the icon, then we'll settle for whatever we get. */
-    if (/* score is >= PT_BENCHMARK */ || onClick) {
-        createNotification(nextBigNews[0], nextBigNews[1]);
-        makeSound();
+        /* If a hot topic was found, throw out a notification! However, 
+         * if there is nothing over PT_BENCHMARK points AND the user 
+         * clicked on the icon, then we'll settle for whatever we get. */
+        if (/* score is >= PT_BENCHMARK */ || onClick) {
+            createNotification(nextBigNews[0], nextBigNews[1]);
+            makeSound();
+        }
     }
+    
+    // Send an HTTP GET request to Hacker News
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', NEWS_URL, true);
+    xhr.responseType = 'text';
+    xhr.onload = getBiggestNews;
+    
+    xhr.send(); // go request go!
 }
 
 // Generates the sound that is specified by NOTIF_SOUND_PATH.
@@ -67,19 +67,24 @@ function startAlarm() {
 
 // Creates a notification with TITLE as the title and LINK as the message.
 function createNotification(title, link) {
-    chrome.notifications.create(STD_NOTIF_NAME + id, {
+    chrome.notifications.create(notifId.toString(), {
         type: 'basic',
         title: title, // the name of the article
         message: link, // a link to the article
         iconUrl: NOTIF_ICON_PATH
     }, function() {});
     
+    // Have the notification take you to the article on click
+    chrome.notifications.onClicked.addListener(function(notificationId) {
+        window.open(links[parseInt(notificationId)]);
+    });
+    
     // Close the notification after 20 seconds
     timer = setTimeout(function() {
-        chrome.notifications.clear(STD_NOTIF_NAME + id, function() {});
+        chrome.notifications.clear(notifId.toString(), function() {});
     }, NOTIF_DELAY);
     
-    id++; // now that we're done with this iteration of the notification id, update it
+    notifId++; // now that we're done with this iteration of the notification id, update it
 }
 
 // We'll check for updates and start the first alarm
