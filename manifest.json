@@ -3,7 +3,7 @@
 
   "name": "Hacker Headlines",
   "description": "This extension displays the highest-rated hacker news",
-  "version": "1.1.0",
+  "version": "1.2.0",
   
   "icons": { 
       "48": "images/hh_icon48.png",

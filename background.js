@@ -28,12 +28,12 @@ var links = []; /* links, indexed by notification id. Dually serves as an set of
  */
 function getBiggestNews(news) {
     // Parse: link/title/score chunks
-    var data = news.match(/<a href=".*">.*sitebit comhead".*\n.*id="score_\d+">\d+ points/g);
+    var data = news.match(/class="title".*<a href=".*">.*<\/a>.*sitebit comhead".*\n.*id="score_\d+">\d+ points/g);
     var dtLength = data.length;
     
     var topLink, topTitle, topScore = -1; // vars for keeping track of the biggest news
     for (var i = 0; i < dtLength; i++) {
-        var dataRe = /<a href="(.*)">(.*)<\/a>.*\n.*>(\d+)\spoints/g;
+        var dataRe = /class="title".*<a href="(.*)">(.*)<\/a>.*sitebit comhead.*\n.*>(\d+)\spoints/g;
         var filteredData = dataRe.exec(data[i]).slice(1, 4);
         var link = filteredData[0], title = filteredData[1], score = filteredData[2];
         
