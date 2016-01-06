@@ -15,7 +15,7 @@ const NOTIF_DELAY = 15000; // ms until we close the notification automatically
 const NOTIF_ICON_PATH = 'images/hacker_news.png';
 
 var notifId = 0; // the id for each notification
-var day = Date.prototype.getDay();
+var day = (new Date()).getDay();
 var links = []; /* links, indexed by notification id. Dually serves as an set of identifiers
                  * for headlines that have already been displayed */
 
